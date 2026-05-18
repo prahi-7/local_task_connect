@@ -13,7 +13,7 @@ app.use(cors({
 app.use(express.json());
 
 // ============ MONGODB ATLAS CONNECTION ============
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = mongoose.connect(process.env.MANGODB_URI);
 
 if (!MONGODB_URI) {
   console.error('❌ MONGODB_URI not found in .env file!');
