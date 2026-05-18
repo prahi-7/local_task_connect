@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
 
-const API = 'http://localhost:5000/api';
+const API = 'https://local-task-connect.onrender.com';
 
 // ==================== AUTH CONTEXT ====================
 const AuthContext = React.createContext();
