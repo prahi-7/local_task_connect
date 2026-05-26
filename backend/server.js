@@ -11,21 +11,23 @@ app.use(cors({
 }));
 
 app.use(express.json());
+// ============ LOCAL MONGODB CONNECTION ============
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ltc';
 
-// ============ MONGODB ATLAS CONNECTION ============
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  console.error('❌ MONGODB_URI not found in .env file!');
-  process.exit(1);
-}
-
-console.log('🔌 Connecting to MongoDB Atlas...');
+console.log('🔌 Connecting to Local MongoDB...');
+console.log('📍 URI:', MONGODB_URI);
 
 mongoose.connect(MONGODB_URI)
-  .then(() => console.log('✅ MongoDB Atlas Connected Successfully'))
+  .then(() => {
+    console.log('✅ Local MongoDB Connected Successfully');
+    console.log('📊 Database: local-talent');
+  })
   .catch(err => {
-    console.error('❌ MongoDB Atlas Connection Error:', err.message);
+    console.error('❌ MongoDB Connection Error:', err.message);
+    console.log('\n🔧 TROUBLESHOOTING:');
+    console.log('1. Make sure MongoDB is installed');
+    console.log('2. Run: net start MongoDB (Windows)');
+    console.log('3. Or: brew services start mongodb-community (Mac)');
     process.exit(1);
   });
 
