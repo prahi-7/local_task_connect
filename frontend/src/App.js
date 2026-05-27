@@ -83,7 +83,7 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await axios.post(`${API}/auth/login`, { email, password });
+      const res = await axios.post(`${API}/api/auth/login`, { email, password });
       login(res.data);
       navigate('/dashboard');
     } catch (err) {
@@ -174,7 +174,7 @@ function RegisterPage() {
 
       console.log('Sending registration:', data);
 
-      const res = await axios.post(`${API}/auth/register`, data);
+      const res = await axios.post(`${API}/api/auth/register`, data);
       console.log('Registration success:', res.data);
       
       login(res.data);
@@ -258,7 +258,7 @@ function StudentDashboard() {
         params.userLat = user.latitude;
         params.userLng = user.longitude;
       }
-      const res = await axios.get(`${API}/jobs`, { params });
+      const res = await axios.get(`${API}/api/jobs`, { params });
       setJobs(res.data.data || res.data.jobs || []);
     } catch (err) {
       console.log('Failed to load jobs');
@@ -333,7 +333,7 @@ function EmployerDashboard() {
   const fetchMyJobs = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`${API}/jobs/employer/myjobs`, {
+      const res = await axios.get(`${API}/api/jobs/employer/myjobs`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setJobs(res.data.data || res.data.jobs || []);
@@ -348,7 +348,7 @@ function EmployerDashboard() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`${API}/jobs`, form, {
+      await axios.post(`${API}/api/jobs`, form, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage('✅ Job posted successfully!');
@@ -366,7 +366,7 @@ function EmployerDashboard() {
     if (!window.confirm('Delete this job?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`${API}/jobs/${jobId}`, {
+      await axios.delete(`${API}/api/jobs/${jobId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchMyJobs();
@@ -454,8 +454,8 @@ function AdminDashboard() {
         const token = localStorage.getItem('token');
         const headers = { Authorization: `Bearer ${token}` };
         const [usersRes, jobsRes] = await Promise.all([
-          axios.get(`${API}/admin/users`, { headers }),
-          axios.get(`${API}/jobs`)
+          axios.get(`${API}/api/admin/users`, { headers }),
+          axios.get(`${API}/api/jobs`)
         ]);
         setUsers(usersRes.data.data || usersRes.data.users || []);
         setJobs(jobsRes.data.data || jobsRes.data.jobs || []);
