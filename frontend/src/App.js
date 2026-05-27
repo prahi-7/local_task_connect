@@ -44,7 +44,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-brand">📍 LocalTalent Connect</Link>
+        <Link to="/" className="navbar-brand">📍 Local Task Connect</Link>
         <div className="navbar-menu">
           {user ? (
             <>
@@ -270,7 +270,7 @@ function StudentDashboard() {
   const handleApply = async (jobId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`${API}/applications`, { jobId }, {
+      await axios.post(`${API}/api/applications`, { jobId }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage('✅ Applied successfully!');
