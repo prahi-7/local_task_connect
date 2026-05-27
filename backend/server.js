@@ -11,23 +11,21 @@ app.use(cors({
 }));
 
 app.use(express.json());
-// ============ LOCAL MONGODB CONNECTION ============
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ltc';
 
-console.log('🔌 Connecting to Local MongoDB...');
-console.log('📍 URI:', MONGODB_URI);
+// ============ MONGODB ATLAS CONNECTION ============
+const MONGODB_URI = "mongodb://prahi:prahi7@ac-f7xsel1-shard-00-00.cptmyir.mongodb.net:27017,ac-f7xsel1-shard-00-01.cptmyir.mongodb.net:27017,ac-f7xsel1-shard-00-02.cptmyir.mongodb.net:27017/?ssl=true&replicaSet=atlas-xh4hj4-shard-0&authSource=admin&appName=Cluster1";
+mongoose.connect(MONGODB_URI)
+if (!MONGODB_URI) {
+  console.error('❌ MONGODB_URI not found in .env file!');
+  process.exit(1);
+}
+
+console.log('🔌 Connecting to MongoDB Atlas...');
 
 mongoose.connect(MONGODB_URI)
-  .then(() => {
-    console.log('✅ Local MongoDB Connected Successfully');
-    console.log('📊 Database: local-talent');
-  })
+  .then(() => console.log('✅ MongoDB Atlas Connected Successfully'))
   .catch(err => {
-    console.error('❌ MongoDB Connection Error:', err.message);
-    console.log('\n🔧 TROUBLESHOOTING:');
-    console.log('1. Make sure MongoDB is installed');
-    console.log('2. Run: net start MongoDB (Windows)');
-    console.log('3. Or: brew services start mongodb-community (Mac)');
+    console.error('❌ MongoDB Atlas Connection Error:', err.message);
     process.exit(1);
   });
 
